@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const Book = require("./models/Book");
+const User = require("./models/User");
 const bodyParser = require("body-parser");
 
 mongoose
@@ -27,5 +28,26 @@ app.use((req, res, next) => {
 });
 
 app.use(bodyParser.json());
+
+// --------- GET ----------
+
+app.get("/api/books/:id", (req, res, next) => {
+  Book.findOne({ _id: req.params.id })
+    .then((book) => res.status(200).json({ book }))
+    .catch((error) => res.status(404).json({ error }));
+});
+
+app.get("/api/books/bestrating", (req, res, next) => {
+  Book.find({ averageRating: req.params });
+  // A COMPLETER
+});
+
+app.get("/api/books", (req, res, next) => {
+  Book.find()
+    .then((books) => {
+      res.status(200).json({ books });
+    })
+    .catch((error) => res.status(404).json({ error }));
+});
 
 module.exports = app;

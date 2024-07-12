@@ -70,11 +70,25 @@ exports.deleteBook = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
+// exports.getBestBook = (req, res, next);
+
 exports.getOneBook = (req, res, next) => {
   Book.findOne({ _id: req.params.id })
     .then((book) => res.status(200).json(book))
     .catch((error) => res.status(404).json({ error }));
 };
+
+// exports.getOneBook = (req, res, next) => {
+//   console.log("Requested Book ID:", req.params.id); // Log de débogage
+//   Book.findOne({ _id: req.params.id })
+//     .then((book) => {
+//       if (!book) {
+//         return res.status(404).json({ error: "Book not found" });
+//       }
+//       res.status(200).json(book);
+//     })
+//     .catch((error) => res.status(500).json({ error }));
+// };
 
 exports.getAllBook = (req, res, next) => {
   Book.find()

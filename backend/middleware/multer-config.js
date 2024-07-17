@@ -22,6 +22,8 @@ const storage = multer.diskStorage({
   },
 });
 
+module.exports = multer({ storage }).single("image");
+
 // ajouter resize des images
 
-module.exports = multer({ storage }).single("image");
+// const upload = multer({ storage }).single("image");

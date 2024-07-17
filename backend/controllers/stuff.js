@@ -22,6 +22,32 @@ exports.createBook = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
+exports.rateBook = (req, res, next) => {
+  const userId = req.auth.userId;
+  const grade = req.body.grade;
+
+  Book.findById({ _id: req.params.id }).then((book) => {
+    // sûr d'avoir un tableau vide et pas undefined
+    if (!Array.isArray(book.ratings)) {
+      book.ratings = [];
+    }
+
+    const alreadyRated = book.ratings.find(
+      (rating) => rating.userId === userId
+    );
+    if (!alreadyRated) {
+      book.ratings.push({ userId: userId, grade: grade });
+    } else {
+      alert("Vous avez déjà noté ce livre");
+    }
+
+    book
+      .save()
+      .then(() => res.statue(200).json({ message: "Note attribuée au livre" }))
+      .catch((error) => res.status(400).json({ error }));
+  });
+};
+
 exports.modifyBook = (req, res, next) => {
   const bookObject = req.file
     ? {
@@ -75,18 +101,6 @@ exports.getOneBook = (req, res, next) => {
     .then((book) => res.status(200).json(book))
     .catch((error) => res.status(404).json({ error }));
 };
-
-// exports.getOneBook = (req, res, next) => {
-//   console.log("Requested Book ID:", req.params.id); // Log de débogage
-//   Book.findOne({ _id: req.params.id })
-//     .then((book) => {
-//       if (!book) {
-//         return res.status(404).json({ error: "Book not found" });
-//       }
-//       res.status(200).json(book);
-//     })
-//     .catch((error) => res.status(500).json({ error }));
-// };
 
 exports.getBestBooks = (req, res, next) => {
   Book.find()

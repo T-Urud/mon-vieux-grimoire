@@ -22,7 +22,15 @@ const storage = multer.diskStorage({
   },
 });
 
-module.exports = multer({ storage }).single("image");
+const fileFilter = (req, file, callback) => {
+  if (MIME_TYPES[file.mimetype]) {
+    callback(null, true);
+  } else {
+    callback(new Error("Merci d'ajouter une image"), false);
+  }
+};
+
+module.exports = multer({ storage, fileFilter }).single("image");
 
 // ajouter resize des images
 

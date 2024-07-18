@@ -30,8 +30,14 @@ const fileFilter = (req, file, callback) => {
   }
 };
 
-module.exports = multer({ storage, fileFilter }).single("image");
+const resizedImage = async (req, file, callback) => {
+  await sharp(req.file.buffer)
+    .resize(600, 600, {
+      withoutEnlargement: true,
+      fit: "contain",
+    })
+    .withMetadata()
+    .toBuffer();
+};
 
-// ajouter resize des images
-
-// const upload = multer({ storage }).single("image");
+module.exports = multer({ storage, fileFilter, resizedImage }).single("image");

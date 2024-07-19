@@ -1,7 +1,4 @@
 const multer = require("multer");
-const sharp = require("sharp");
-const path = require("path");
-const fs = require("fs");
 
 const MIME_TYPES = {
   "image/jpg": "jpg",
@@ -30,14 +27,4 @@ const fileFilter = (req, file, callback) => {
   }
 };
 
-const resizedImage = async (req, file, callback) => {
-  await sharp(req.file.buffer)
-    .resize(600, 600, {
-      withoutEnlargement: true,
-      fit: "contain",
-    })
-    .withMetadata()
-    .toBuffer();
-};
-
-module.exports = multer({ storage, fileFilter, resizedImage }).single("image");
+module.exports = multer({ storage, fileFilter }).single("image");

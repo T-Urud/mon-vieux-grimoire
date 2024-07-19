@@ -24,7 +24,7 @@ exports.createBook = (req, res, next) => {
 
 exports.rateBook = (req, res, next) => {
   const userId = req.auth.userId;
-  const grade = req.body.grade;
+  const grade = req.body.rating;
 
   Book.findById({ _id: req.params.id }).then((book) => {
     // sûr d'avoir un tableau vide et pas undefined
@@ -43,7 +43,7 @@ exports.rateBook = (req, res, next) => {
 
     book
       .save()
-      .then(() => res.statue(200).json({ message: "Note attribuée au livre" }))
+      .then(() => res.status(200).json(book))
       .catch((error) => res.status(400).json({ error }));
   });
 };

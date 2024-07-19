@@ -1,8 +1,11 @@
 const sharp = require("sharp");
-const path = require("path");
-const fs = require("fs");
 
 const resizedImage = async (req, res, next) => {
+  const name = file.originalname.split(" ").join("_");
+  const extension = MIME_TYPES[file.mimetype];
+  const filename = `${name}-${Date.now()}.${extension}`;
+  const filePath = path;
+
   await sharp(req.file.buffer)
     .resize(600, 600, {
       withoutEnlargement: true,
@@ -11,7 +14,9 @@ const resizedImage = async (req, res, next) => {
     .withMetadata()
     .toBuffer();
 
+  req.file.filename = filename;
+
   next();
 };
 
-module.exports = resizedImage;
+module.exports = { resizedImage };

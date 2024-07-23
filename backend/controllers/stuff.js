@@ -37,6 +37,14 @@ exports.rateBook = (req, res, next) => {
     );
     if (!alreadyRated) {
       book.ratings.push({ userId: userId, grade: grade });
+
+      const totalRating = book.ratings.length;
+      const sumRating = book.ratings.reduce(
+        (accumulator, currentValue) => accumulator + currentValue.grade,
+        0
+      );
+      // méthode reduce() pour calculer somme des notes, accumulateur initialisé à 0
+      book.averageRating = sumRating / totalRating;
     } else {
       alert("Vous avez déjà noté ce livre");
     }

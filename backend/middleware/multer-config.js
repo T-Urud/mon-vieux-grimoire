@@ -25,19 +25,25 @@ const fileFilter = (req, file, callback) => {
 const upload = multer({ storage, fileFilter }).single("image");
 
 const resizedImage = async (req, res, next) => {
-  const name = file.originalname.split(" ").join("_");
+  if (!req.file) {
+    next();
+    return;
+  }
+
+  const name = req.file.originalname.split(" ").join("_");
   const extension = MIME_TYPES[req.file.mimetype];
   const filename = `${name}-${Date.now()}.${extension}`;
-  const outputPath = path.join(__dirname, "images", filename);
+  const imageFolder = path.join(__dirname, "..", "images");
+  const outputPath = path.join(imageFolder, filename);
 
-  if (!fs.existsSync(path.join(__dirname, "images"))) {
-    fs.mkdirSync(path.join(__dirname, "images"), { recursive: true });
+  if (!fs.existsSync(imageFolder)) {
+    fs.mkdirSync(imageFolder, { recursive: true });
   }
 
   await sharp(req.file.buffer)
     .resize(600, 600, {
       withoutEnlargement: true,
-      fit: "contain",
+      fit: "inside",
     })
     .withMetadata()
     .toFile(outputPath);

@@ -1,15 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const bookRoutes = require("./routes/stuff");
+const bookRoutes = require("./routes/book");
 const userRoutes = require("./routes/user");
 const path = require("path");
 
+const dbJson = require("./db.json");
+
 mongoose
-  .connect(
-    "mongodb+srv://bobtst:lolbeer@cluster0.mipioi0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(dbJson.url_db, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 

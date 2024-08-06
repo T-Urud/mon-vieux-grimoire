@@ -9,11 +9,17 @@ Liste des outils et technologies nécessaires pour exécuter le projet:
 Node.js : Plateforme pour exécuter le code back-end.	
 
 Express : Framework pour la création d'APIs RESTful.	
+
 MongoDB : Base de données NoSQL pour stocker les données.	
+
 Mongoose : ODM (Object Data Modeling) pour faciliter la manipulation de la base de données.	
+
 Bcrypt : Pour le hachage des mots de passe et l'authentification sécurisée.	
+
 Multer : Pour gérer l'upload de fichiers.	
+
 JSON Web Tokens (JWT) : Pour la création et la gestion des jetons d'authentification.	
+
 
 ## Installation
 

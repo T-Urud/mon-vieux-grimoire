@@ -5,10 +5,13 @@ const bookRoutes = require("./routes/book");
 const userRoutes = require("./routes/user");
 const path = require("path");
 
-const dbJson = require("./db.json");
+require("dotenv").config();
 
 mongoose
-  .connect(dbJson.url_db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 

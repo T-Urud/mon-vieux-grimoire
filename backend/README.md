@@ -7,6 +7,7 @@
 Liste des outils et technologies nécessaires pour exécuter le projet:
 
 Node.js : Plateforme pour exécuter le code back-end.	
+
 Express : Framework pour la création d'APIs RESTful.	
 MongoDB : Base de données NoSQL pour stocker les données.	
 Mongoose : ODM (Object Data Modeling) pour faciliter la manipulation de la base de données.	
